@@ -1,6 +1,6 @@
 javadoc -d docs/ $(find -name *.java)
 
-
+cd docs
 git fetch --depth=1 javadoc gh-pages
 git add --all
 git commit -m "Add Documentation"
