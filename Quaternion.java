@@ -30,26 +30,34 @@ public class Quaternion {
         System.out.println("k = " + this.k);
     }
 
+    public String toString(){
+        return "( " + this.r + " ; " + this.i + " ; " + this.j + " ; " + this.k + " )";
+    }
+
     public static void main(String[] args) {
     
         Quaternion a = new Quaternion();
 
         System.out.println("printing a:");
         a.print();
+        System.out.println(a);
 
         Quaternion b = new Quaternion(1,2,3,4);
 
         System.out.println("printing b:");
         b.print();
+        System.out.println(b);
 
         Quaternion c = new Quaternion(1,1,1,1);
 
         System.out.println("printing c:");
         c.print();
+        System.out.println(c);
 
         Quaternion d = b.add(c);
 
         System.out.println("printing d:");
         d.print();
+        System.out.println(d);
     }
 }
