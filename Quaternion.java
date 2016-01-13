@@ -1,3 +1,11 @@
+//: object/Quaternion.java
+
+/** A Java Class to operate with Quaternions.
+ * Read more about Quaternions <a href="https://en.wikipedia.org/wiki/Quaternion">here</a>
+ * @author Julian Mateu
+ * @author julianmateu@gmail.com
+ * @version 1.0
+ */
 public class Quaternion {
     //fields
     private double r, i, j, k;
@@ -5,6 +13,9 @@ public class Quaternion {
     //constructors
     public Quaternion() {}
 
+    /** Constructor
+     * @param r Real part
+     */
     public Quaternion(double r, double i, double j, double k) {
         this.r = r;
         this.i = i;
@@ -12,6 +23,9 @@ public class Quaternion {
         this.k = k;
     }
 
+    /** Method to add two Quaternions
+     * @return It returns a new Quaternion with the result of the sum.
+     */
     public Quaternion add(Quaternion addend) {
         Quaternion result = new Quaternion();
         
@@ -29,7 +43,8 @@ public class Quaternion {
         System.out.println("j = " + this.j);
         System.out.println("k = " + this.k);
     }
-
+    
+    @Override
     public String toString(){
         return "( " + this.r + " ; " + this.i + " ; " + this.j + " ; " + this.k + " )";
     }
@@ -60,4 +75,4 @@ public class Quaternion {
         d.print();
         System.out.println(d);
     }
-}
+} ///:~
