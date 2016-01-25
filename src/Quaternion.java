@@ -71,6 +71,7 @@ public class Quaternion {
     /** Method to assert if to Quaternions are equal.
      * @return Returns True if they are equal, and False otherwise.
      */
+    //@Override
     public boolean equals(Quaternion compared) {
         
         if (this.r != compared.r) return false;
