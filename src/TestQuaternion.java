@@ -9,7 +9,7 @@ public class TestQuaternion extends TestCase {
     public void testEquals() {
         Quaternion a = new Quaternion(1,0,-1,5);
 
-        assertTrue(a.equals(new Quaternion(1,0,-1,5)));
+        assertEquals(a,new Quaternion(1,0,-1,5));
     }
 
     public void testAddition() {
