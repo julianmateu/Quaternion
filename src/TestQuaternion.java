@@ -10,6 +10,8 @@ public class TestQuaternion extends TestCase {
         Quaternion a = new Quaternion(1,0,-1,5);
 
         assertEquals(a,new Quaternion(1,0,-1,5));
+        assertFalse(a.equals(new Quaternion(-1,0,0,5)));
+
     }
 
     public void testAddition() {
@@ -17,6 +19,6 @@ public class TestQuaternion extends TestCase {
         Quaternion b = new Quaternion(1,0,-1,-1);
         Quaternion result = new Quaternion(2,1,0,-2);
 
-        assertTrue(result.equals(a.add(b)));
+        assertEquals(a.add(b),result);
     }
 }
