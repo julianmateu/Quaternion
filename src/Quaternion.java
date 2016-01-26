@@ -71,14 +71,17 @@ public class Quaternion {
     /** Method to assert if to Quaternions are equal.
      * @return Returns True if they are equal, and False otherwise.
      */
-    //@Override
     public boolean equals(Quaternion compared) {
         
-        if (this.r != compared.r) return false;
-        if (this.i != compared.i) return false;
-        if (this.j != compared.j) return false;
-        if (this.k != compared.k) return false;
-        else return true;
+        return this.r == compared.getR() && this.i == compared.getI() && this.j == compared.getJ() && this.k == compared.getK();
+    }
+
+    /** Method to assert if to Quaternions are equal.
+     * @return Returns True if they are equal, and False otherwise.
+     */
+    @Override
+    public boolean equals(Object compared) {
+        return compared instanceof Quaternion && this.equals((Quaternion) compared);
     }
 
     @Override
@@ -101,5 +104,6 @@ public class Quaternion {
         System.out.println("d = b + c = " + d );
 
         System.out.println("d = b + c ? " + d.equals(new Quaternion(2,3,4,5)));
+        System.out.println("d = b " + d.equals(b));
     }
 } ///:~
