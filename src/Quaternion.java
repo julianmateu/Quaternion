@@ -84,26 +84,11 @@ public class Quaternion {
         return compared instanceof Quaternion && this.equals((Quaternion) compared);
     }
 
+    /** Method to convert a Quaternion to a string.
+     * @return Returns the Quaternion in the form ( r ; i ; j ; k ).
+     */
     @Override
     public String toString(){
         return "( " + this.r + " ; " + this.i + " ; " + this.j + " ; " + this.k + " )";
-    }
-
-    public static void main(String[] args) {
-    
-        Quaternion a = new Quaternion(0,0,0,0);
-        System.out.println("a = " + a);
-
-        Quaternion b = new Quaternion(1,2,3,4);
-        System.out.println("b = " + b);
-
-        Quaternion c = new Quaternion(1,1,1,1);
-        System.out.println("c = " + c);
-
-        Quaternion d = b.add(c);
-        System.out.println("d = b + c = " + d );
-
-        System.out.println("d = b + c ? " + d.equals(new Quaternion(2,3,4,5)));
-        System.out.println("d = b " + d.equals(b));
     }
 } ///:~
