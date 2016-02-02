@@ -20,6 +20,43 @@ public class Quaternion {
         this.k = k;
     }
 
+    // Getters & Setters
+    
+    /** r Getter
+     */
+    public double getR() {return this.r;}
+
+    /** i Getter
+     */
+    public double getI() {return this.i;}
+
+
+    /** j Getter
+     */
+    public double getJ() {return this.j;}
+
+    /** k Getter
+     */
+    public double getK() {return this.k;}
+
+    /** r Setter
+     */
+    public void setR(double r) {this.r = r;}
+
+    /** i Setter
+     */
+    public void setI(double i) {this.i = i;}
+
+    /** j Setter
+     */
+    public void setJ(double j) {this.j = j;}
+
+    /** k Setter
+     */
+    public void setK(double k) {this.k = k;}
+
+    // Methods
+
     /** Method to add two Quaternions
      * @return It returns a new Quaternion with the result of the sum.
      */
@@ -31,23 +68,27 @@ public class Quaternion {
             this.k + addend.k);
     }
 
+    /** Method to assert if to Quaternions are equal.
+     * @return Returns True if they are equal, and False otherwise.
+     */
+    public boolean equals(Quaternion compared) {
+        
+        return this.r == compared.getR() && this.i == compared.getI() && this.j == compared.getJ() && this.k == compared.getK();
+    }
+
+    /** Method to assert if to Quaternions are equal.
+     * @return Returns True if they are equal, and False otherwise.
+     */
+    @Override
+    public boolean equals(Object compared) {
+        return compared instanceof Quaternion && this.equals((Quaternion) compared);
+    }
+
+    /** Method to convert a Quaternion to a string.
+     * @return Returns the Quaternion in the form ( r ; i ; j ; k ).
+     */
     @Override
     public String toString(){
         return "( " + this.r + " ; " + this.i + " ; " + this.j + " ; " + this.k + " )";
-    }
-
-    public static void main(String[] args) {
-    
-        Quaternion a = new Quaternion(0,0,0,0);
-        System.out.println("a = " + a);
-
-        Quaternion b = new Quaternion(1,2,3,4);
-        System.out.println("b = " + b);
-
-        Quaternion c = new Quaternion(1,1,1,1);
-        System.out.println("c = " + c);
-
-        Quaternion d = b.add(c);
-        System.out.println("d = b + c = " + d );
     }
 } ///:~
