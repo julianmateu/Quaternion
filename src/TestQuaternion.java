@@ -155,11 +155,10 @@ public class TestQuaternion extends TestCase {
                 new Quaternion(0, 0, 0, 0)); // Multiplying by left zero element.
         assertEquals(new Quaternion(1, 2, 3, 4).multiply(new Quaternion(
                         ((double)1.0)/28, ((double)-2.0)/28, ((double)-3.0)/28, ((double)-4.0)/28)),
-                new Quaternion(1, 0, 0, 0),1e-10); // Multiplying by right inverse.
+                new Quaternion(1, 0, 0, 0)); // Multiplying by right inverse.
         assertEquals(new Quaternion(
-                (double)1.0/28, (double)-2.0/28, (double)-3.0/28, (double)-4.0/28)).multiply(
-                new Quaternion(1, 2, 3, 4)),new Quaternion(1, 0, 0, 0),
-                1e-10); // Multiplying by left inverse.
+                (double)1.0/28, (double)-2.0/28, (double)-3.0/28, (double)-4.0/28).multiply(new
+                Quaternion(1, 2, 3, 4)),new Quaternion(1, 0, 0, 0)); // Multiplying by left inverse.
 
 
         // Negative number tests:
