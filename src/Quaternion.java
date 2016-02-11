@@ -59,14 +59,14 @@ public class Quaternion {
      */
     public Quaternion multiply(Quaternion factor) {
         return new Quaternion(
-                this.r * factor.getR() - this.i * factor.getI()
-                        - this.j * factor.getJ() - this.k * factor.getK(),
-                this.r * factor.getI() + this.i * factor.getR()
-                        + this.j * factor.getK() - this.k * factor.getJ(),
-                this.r * factor.getJ() - this.i * factor.getK()
-                        + this.j * factor.getR() + this.k * factor.getI(),
-                this.r * factor.getK() + this.i * factor.getJ()
-                        - this.j * factor.getI() + this.k * factor.getR());
+                this.getR() * factor.getR() - this.getI() * factor.getI()
+                        - this.getJ() * factor.getJ() - this.getK() * factor.getK(),
+                this.getR() * factor.getI() + this.getI() * factor.getR()
+                        + this.getJ() * factor.getK() - this.getK() * factor.getJ(),
+                this.getR() * factor.getJ() - this.getI() * factor.getK()
+                        + this.getJ() * factor.getR() + this.getK() * factor.getI(),
+                this.getR() * factor.getK() + this.getI() * factor.getJ()
+                        - this.getJ() * factor.getI() + this.getK() * factor.getR());
     }
 
     /**
@@ -76,10 +76,10 @@ public class Quaternion {
      */
     public Quaternion multiply(double scalar) {
         return new Quaternion(
-                this.r * scalar,
-                this.i * scalar,
-                this.j * scalar,
-                this.k * scalar);
+                this.getR() * scalar,
+                this.getI() * scalar,
+                this.getJ() * scalar,
+                this.getK() * scalar);
     }
 
     /**

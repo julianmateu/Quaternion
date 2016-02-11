@@ -19,6 +19,20 @@ public class TestQuaternion extends TestCase {
     }
 
     /**
+     * Assert if two Quaternions are equal within a tolerance.
+     * 
+     * @param expected the expected Quaternion.
+     * @param actual the actual Quaternion.
+     * @param delta the tolerance.
+     */
+    public void assertEqualsQuaternion(Quaternion expected, Quaternion actual, double delta){
+	assertEquals(expected.getR(),actual.getR(),delta);
+	assertEquals(expected.getI(),actual.getI(),delta);
+	assertEquals(expected.getJ(),actual.getJ(),delta);
+	assertEquals(expected.getK(),actual.getK(),delta);
+    }
+
+    /**
      * Tester for the equals() method.
      */
     public void testEquals() {
@@ -153,12 +167,12 @@ public class TestQuaternion extends TestCase {
                 new Quaternion(0, 0, 0, 0)); // Multiplying by right zero element.
         assertEquals(new Quaternion(0, 0, 0, 0).multiply(new Quaternion(1, 1, 1, 1)),
                 new Quaternion(0, 0, 0, 0)); // Multiplying by left zero element.
-        assertEquals(new Quaternion(1, 2, 3, 4).multiply(new Quaternion(
-                        ((double)1.0)/28, ((double)-2.0)/28, ((double)-3.0)/28, ((double)-4.0)/28)),
-                new Quaternion(1, 0, 0, 0)); // Multiplying by right inverse.
-        assertEquals(new Quaternion(
-                (double)1.0/28, (double)-2.0/28, (double)-3.0/28, (double)-4.0/28).multiply(new
-                Quaternion(1, 2, 3, 4)),new Quaternion(1, 0, 0, 0)); // Multiplying by left inverse.
+        assertEqualsQuaternion(new Quaternion(1, 2, 3, 4).multiply(new Quaternion(
+                        ((double)1.0)/30, ((double)-2.0)/30, ((double)-3.0)/30, ((double)-4.0)/30)),
+                new Quaternion(1, 0, 0, 0),1e-10); // Multiplying by right inverse.
+        assertEqualsQuaternion(new Quaternion(
+                (double)1.0/30, (double)-2.0/30, (double)-3.0/30, (double)-4.0/30).multiply(new
+                Quaternion(1, 2, 3, 4)),new Quaternion(1, 0, 0, 0),1e-10); // Multiplying by left inverse.
 
 
         // Negative number tests:
