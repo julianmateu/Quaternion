@@ -33,10 +33,10 @@ public class Quaternion {
      */
     public Quaternion add(Quaternion addend) {
         return new Quaternion(
-                this.r + addend.getR(),
-                this.i + addend.getI(),
-                this.j + addend.getJ(),
-                this.k + addend.getK());
+                this.getR() + addend.getR(),
+                this.getI() + addend.getI(),
+                this.getJ() + addend.getJ(),
+                this.getK() + addend.getK());
     }
 
     /**
@@ -46,10 +46,10 @@ public class Quaternion {
      */
     public Quaternion subtract(Quaternion subtrahend) {
         return new Quaternion(
-                this.r - subtrahend.getR(),
-                this.i - subtrahend.getI(),
-                this.j - subtrahend.getJ(),
-                this.k - subtrahend.getK());
+                this.getR() - subtrahend.getR(),
+                this.getI() - subtrahend.getI(),
+                this.getJ() - subtrahend.getJ(),
+                this.getK() - subtrahend.getK());
     }
 
     /**
@@ -89,8 +89,8 @@ public class Quaternion {
      */
     public boolean equals(Quaternion compared) {
 
-        return this.r == compared.getR() && this.i == compared.getI() && this.j ==
-                compared.getJ() && this.k == compared.getK();
+        return this.getR() == compared.getR() && this.getI() == compared.getI() && this.getJ() ==
+                compared.getJ() && this.getK() == compared.getK();
     }
 
     /**
@@ -110,7 +110,8 @@ public class Quaternion {
      */
     @Override
     public String toString() {
-        return "( " + this.r + " ; " + this.i + " ; " + this.j + " ; " + this.k + " )";
+        return "( " + this.getR() + " ; " + this.getI() + " ; " +
+                this.getJ() + " ; " + this.getK() + " )";
     }
 
     //************ Getters & Setters ************//
@@ -147,28 +148,28 @@ public class Quaternion {
     /**
      * r Setter.
      */
-    public void setR(double r) {
+    private void setR(double r) {
         this.r = r;
     }
 
     /**
      * i Setter.
      */
-    public void setI(double i) {
+    private void setI(double i) {
         this.i = i;
     }
 
     /**
      * j Setter.
      */
-    public void setJ(double j) {
+    private void setJ(double j) {
         this.j = j;
     }
 
     /**
      * k Setter.
      */
-    public void setK(double k) {
+    private void setK(double k) {
         this.k = k;
     }
 } ///:~

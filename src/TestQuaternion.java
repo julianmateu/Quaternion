@@ -116,6 +116,9 @@ public class TestQuaternion extends TestCase {
      */
     public void testMultiplicationDouble() {
 
+        Quaternion expected;
+        Quaternion actual;
+
         // Simple tests:
         assertEquals(new Quaternion(1, 2, 3, 4).multiply(2),
                 new Quaternion(2, 4, 6, 8));
@@ -158,26 +161,35 @@ public class TestQuaternion extends TestCase {
      */
     public void testMultiplicationQuaternion() {
 
+        Quaternion expected;
+        Quaternion actual;
+
         // Simple tests:
-        assertEquals(new Quaternion(1, 2, 3, 4).multiply(new Quaternion(2, 2, 2, 2)),
-                new Quaternion(-16, 4, 12, 8));
-        assertEquals(new Quaternion(1, 2, 3, 4).multiply(new Quaternion(1, 2, 3, 4)),
-                new Quaternion(-28, 4, 6, 8));
-        assertEquals(new Quaternion(1, 1, 1, 1).multiply(new Quaternion(0, 0, 0, 0)),
-                new Quaternion(0, 0, 0, 0)); // Multiplying by right zero element.
-        assertEquals(new Quaternion(0, 0, 0, 0).multiply(new Quaternion(1, 1, 1, 1)),
-                new Quaternion(0, 0, 0, 0)); // Multiplying by left zero element.
-        assertEqualsQuaternion(new Quaternion(1, 2, 3, 4).multiply(new Quaternion(
-                        ((double) 1.0) / 30, ((double) -2.0) / 30, ((double) -3.0) / 30, ((double) -4.0) / 30)),
-                new Quaternion(1, 0, 0, 0), 1e-10); // Multiplying by right inverse.
-        assertEqualsQuaternion(new Quaternion(
-                (double) 1.0 / 30, (double) -2.0 / 30, (double) -3.0 / 30, (double) -4.0 / 30).multiply(new
-                Quaternion(1, 2, 3, 4)), new Quaternion(1, 0, 0, 0), 1e-10); // Multiplying by left inverse.
+        expected = new Quaternion(1, 2, 3, 4).multiply(new Quaternion(2, 2, 2, 2));
+        assertEquals(expected, new Quaternion(-16, 4, 12, 8));
 
+        expected = new Quaternion(1, 2, 3, 4).multiply(new Quaternion(1, 2, 3, 4));
+        assertEquals(expected, new Quaternion(-28, 4, 6, 8));
 
-        // Negative number tests:
-        assertEquals(new Quaternion(-1, -1, -1, -1).multiply(new Quaternion(1, 2, 3, 4)),
-                new Quaternion(8, -4, -2, -6));
+        expected = new Quaternion(1, 1, 1, 1).multiply(new Quaternion(0, 0, 0, 0));
+        assertEquals(expected, new Quaternion(0, 0, 0, 0)); // Multiplying by right zero element.
+
+        expected = new Quaternion(0, 0, 0, 0).multiply(new Quaternion(1, 1, 1, 1));
+        assertEquals(expected, new Quaternion(0, 0, 0, 0)); // Multiplying by left zero element.
+
+        expected = new Quaternion(1, 2, 3, 4).multiply(
+                new Quaternion(1, -2, -3, -4).multiply(1.0 / 30));
+        actual = new Quaternion(1, 0, 0, 0);
+        assertEqualsQuaternion(expected, actual, 1e-10);// Multiplying by right inverse.
+
+        expected = new Quaternion(1, -2, -3, -4).multiply(1.0 / 30).multiply(
+                new Quaternion(1, 2, 3, 4));
+        actual = new Quaternion(1, 0, 0, 0);
+        assertEqualsQuaternion(expected, actual, 1e-10); // Multiplying by left inverse.
+
+        // Negative number tests
+        expected = new Quaternion(-1, -1, -1, -1).multiply(new Quaternion(1, 2, 3, 4));
+        assertEquals(expected, new Quaternion(8, -4, -2, -6));
 
     }
 } ///:~
