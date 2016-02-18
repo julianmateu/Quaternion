@@ -192,4 +192,64 @@ public class TestQuaternion extends TestCase {
         assertEquals(expected, new Quaternion(8, -4, -2, -6));
 
     }
+
+    /**
+     * Tester for the conjugation method.
+     */
+    public void testConjugation() {
+        assertEquals(new Quaternion(1, -1, -1, -1), new Quaternion(1, 1, 1, 1).conjugate());
+        assertEquals(new Quaternion(1, 1, 1, 1), new Quaternion(1, -1, -1, -1).conjugate());
+        assertEquals(new Quaternion(1, 1, 1, 1), new Quaternion(1, -1, -1, -1).conjugate());
+
+    }
+
+    /**
+     * Tester for the conjugateMultiplying method.
+     */
+    public void testConjugateMultiplying() {
+        assertEquals(new Quaternion(1, -1, -1, -1),
+                new Quaternion(1, 1, 1, 1).conjugateMultiplying());
+        assertEquals(new Quaternion(1, 1, 1, 1),
+                new Quaternion(1, -1, -1, -1).conjugateMultiplying());
+        assertEquals(new Quaternion(1, 1, 1, 1),
+                new Quaternion(1, -1, -1, -1).conjugateMultiplying());
+
+        // Tests for equality between the two forms of conjugation.
+        assertEquals(new Quaternion(1, 2, 3, 4).conjugate(),
+                new Quaternion(1, 2, 3, 4).conjugateMultiplying());
+
+    }
+
+    /**
+     * Tester for the norm method.
+     */
+    public void testNorm() {
+
+        double tol = 1e-6; // Tolerance.
+        assertEquals(new Quaternion(1, 1, 1, 0).norm(), Math.sqrt(3), tol);
+        assertEquals(new Quaternion(1, 0, 0, 0).norm(), 1, tol);
+        assertEquals(new Quaternion(-1, 1, -1, 1).norm(), 2, tol);
+        assertEquals(new Quaternion(1, 2, -3, 4).norm(), Math.sqrt(30), tol);
+        assertEquals(new Quaternion(2, 2, 2, 2).norm(), 4, tol);
+
+        try {
+            Quaternion vector = new Quaternion(0, 0, 0, 0);
+            vector.normalize();
+            fail("Should have thrown an IllegalArgumentException for zero norm");
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        }
+    }
+
+    /**
+     * Tester for the normalize method.
+     */
+    public void testNormalize() {
+        assertEquals(new Quaternion(1, 0, 0, 0).normalize(), new Quaternion(1, 0, 0, 0));
+        assertEquals(new Quaternion(1, -1, 0, 0).normalize(),
+                new Quaternion(1.0 / Math.sqrt(2), -1.0 / Math.sqrt(2), 0, 0));
+        assertEquals(new Quaternion(1, 1, 1, 1).normalize(),
+                new Quaternion(1, 1, 1, 1).multiply(1.0 / 2));
+        assertEquals(new Quaternion(-1, 0, 0, 0).normalize(), new Quaternion(-1, 0, 0, 0));
+    }
 } ///:~

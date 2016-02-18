@@ -9,6 +9,9 @@
  * @version 1.0
  */
 public class Quaternion {
+
+    private static final double MIN_TOLERANCE = 1e-10;
+
     //************ fields ************//
     private double r, i, j, k;
 
@@ -80,6 +83,69 @@ public class Quaternion {
                 this.getI() * scalar,
                 this.getJ() * scalar,
                 this.getK() * scalar);
+    }
+
+    /**
+     * Method to conjugate a Quaternion.
+     *
+     * @return Returns a new Quaternion with the conjugate.
+     */
+    public Quaternion conjugate() {
+        return new Quaternion(
+                this.getR(),
+                -this.getI(),
+                -this.getJ(),
+                -this.getK());
+    }
+
+    /**
+     * Method to conjugate a Quaternion using multiplications only.
+     *
+     * @return Returns a new Quaternion with the conjugate, but using the formula
+     * q* = -(1/2)*(q + iqi + jqj + kqk).
+     */
+    public Quaternion conjugateMultiplying() {
+        Quaternion i = new Quaternion(0, 1, 0, 0);
+        Quaternion j = new Quaternion(0, 0, 1, 0);
+        Quaternion k = new Quaternion(0, 0, 0, 1);
+
+        Quaternion result = this;
+        result = result.add(i.multiply(this.multiply(i)));
+        result = result.add(j.multiply(this.multiply(j)));
+        result = result.add(k.multiply(this.multiply(k)));
+        return result.multiply(-0.5);
+    }
+
+    /**
+     * Method to calculate the norm of a Quaternion.
+     *
+     * @return Returns the norm of the quaternion.
+     */
+    public double norm() {
+        return Math.sqrt(this.getR() * this.getR() +
+                this.getI() * this.getI() +
+                this.getJ() * this.getJ() +
+                this.getK() * this.getK());
+    }
+
+    /**
+     * Method to normalize a Quaternion.
+     *
+     * @return Returns a new Quaternion with unit norm, un the same direction.
+     */
+    public Quaternion normalize() {
+
+        double norm = this.norm();
+
+        if (norm < MIN_TOLERANCE) {
+            throw new IllegalArgumentException("Trying to normalize a zero norm quaternion");
+        }
+
+        return new Quaternion(
+                this.getR(),
+                this.getI(),
+                this.getJ(),
+                this.getK()).multiply(1.0 / norm);
     }
 
     /**
