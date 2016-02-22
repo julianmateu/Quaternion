@@ -27,6 +27,55 @@ public class Quaternion {
         this.k = k;
     }
 
+    /**
+     * Constructor from angle and axis.
+     *
+     * @param angle Angle of counterclockwise rotation in degrees.
+     * @param axis  Vector3D that represents the axis of rotation.
+     */
+    public Quaternion(double angle, Vector3D axis) {
+        double c = Math.cos(Math.toRadians(angle) / 2.0);
+        double s = Math.sin(Math.toRadians(angle) / 2.0);
+
+        if (axis.norm() != 1) {
+            axis = axis.normalize();
+        }
+
+        axis = axis.multiply(s);
+
+        this.r = c;
+        this.i = axis.x();
+        this.j = axis.y();
+        this.k = axis.z();
+    }
+
+    /**
+     * Constructor for basic rotation around X axis.
+     *
+     * @param angle Angle in degrees of counterclockwise rotation around X axis.
+     */
+    public static Quaternion basicRotationX(double angle) {
+        return new Quaternion(angle, new Vector3D(1, 0, 0));
+    }
+
+    /**
+     * Constructor for basic rotation around Y axis.
+     *
+     * @param angle Angle in degrees of counterclockwise rotation around Y axis.
+     */
+    public static Quaternion basicRotationY(double angle) {
+        return new Quaternion(angle, new Vector3D(0, 1, 0));
+    }
+
+    /**
+     * Constructor for basic rotation around Z axis.
+     *
+     * @param angle Angle in degrees of counterclockwise rotation around Z axis.
+     */
+    public static Quaternion basicRotationZ(double angle) {
+        return new Quaternion(angle, new Vector3D(0, 0, 1));
+    }
+
     //************ Methods ************//
 
     /**
@@ -147,6 +196,21 @@ public class Quaternion {
                 this.getJ(),
                 this.getK()).multiply(1.0 / norm);
     }
+
+    /**
+     * Method to rotate a Vector3D using quaternions.
+     *
+     * @param vector Vector3D to rotate.
+     * @return Result of the rotation.
+     */
+    public Vector3D rotate(Vector3D vector) {
+        Quaternion p = new Quaternion(0, vector.x(), vector.y(), vector.z());
+        Quaternion q = this.normalize();
+        Quaternion result = q.multiply(p.multiply(q.conjugate()));
+
+        return new Vector3D(result.getI(), result.getJ(), result.getK());
+    }
+
 
     /**
      * Method to assert if to Quaternions are equal.

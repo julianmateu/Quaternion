@@ -9,26 +9,13 @@ import junit.framework.*;
  * @author julianmateu@gmail.com
  * @version 1.0
  */
-public class TestVector3D extends TestCase {
+public class TestVector3D extends ProjectTest {
 
     /**
      * Constructor
      */
     public TestVector3D(String name) {
         super(name);
-    }
-
-    /**
-     * Assert if two Vector3Ds are equal within a tolerance.
-     *
-     * @param expected the expected Vector3D.
-     * @param actual   the actual Vector3D.
-     * @param delta    the tolerance.
-     */
-    public void assertEqualsVector3D(Vector3D expected, Vector3D actual, double delta) {
-        assertEquals(expected.x(), actual.x(), delta);
-        assertEquals(expected.y(), actual.y(), delta);
-        assertEquals(expected.z(), actual.z(), delta);
     }
 
     /**
@@ -41,6 +28,24 @@ public class TestVector3D extends TestCase {
         assertEquals(a, a);
         assertFalse(a.equals(new Vector3D(-1, 0, 8)));
 
+    }
+
+    /**
+     * Tester for the constructor.
+     */
+    public void testConstructor() {
+        double[] array = new double[]{1,2,3};
+
+        Vector3D v = new Vector3D(array);
+
+        assertEquals(v, new Vector3D(1,2,3));
+
+        try {
+            new Vector3D(null);
+            fail("Should have thrown a NullPointerException");
+        } catch (NullPointerException e){
+            assertTrue(true);
+        }
     }
 
     /**

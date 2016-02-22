@@ -9,27 +9,13 @@ import junit.framework.*;
  * @author julianmateu@gmail.com
  * @version 1.0
  */
-public class TestQuaternion extends TestCase {
+public class TestQuaternion extends ProjectTest {
 
     /**
      * Constructor
      */
     public TestQuaternion(String name) {
         super(name);
-    }
-
-    /**
-     * Assert if two Quaternions are equal within a tolerance.
-     *
-     * @param expected the expected Quaternion.
-     * @param actual   the actual Quaternion.
-     * @param delta    the tolerance.
-     */
-    public void assertEqualsQuaternion(Quaternion expected, Quaternion actual, double delta) {
-        assertEquals(expected.getR(), actual.getR(), delta);
-        assertEquals(expected.getI(), actual.getI(), delta);
-        assertEquals(expected.getJ(), actual.getJ(), delta);
-        assertEquals(expected.getK(), actual.getK(), delta);
     }
 
     /**
@@ -41,7 +27,31 @@ public class TestQuaternion extends TestCase {
         assertEquals(a, new Quaternion(1, 0, -1, 5));
         assertEquals(a, a);
         assertFalse(a.equals(new Quaternion(-1, 0, 0, 5)));
+    }
 
+    /**
+     * Tester for the constructors.
+     */
+    public void testConstructors() {
+        double tol = 1e-10; // Tolerance.
+
+        // Rotation about Z axis.
+        Vector3D axis = new Vector3D(0, 0, 1);
+        Quaternion rotation = new Quaternion(1,0,0,1).multiply(1 / Math.sqrt(2));
+        assertEqualsQuaternion(new Quaternion(90, axis), rotation, tol);
+        assertEqualsQuaternion(Quaternion.basicRotationZ(90), rotation, tol);
+
+        // Rotation about Y axis.
+        axis = new Vector3D(0, 1, 0);
+        rotation = new Quaternion(1,0,1,0).multiply(1 / Math.sqrt(2));
+        assertEqualsQuaternion(new Quaternion(90, axis), rotation, tol);
+        assertEqualsQuaternion(Quaternion.basicRotationY(90), rotation, tol);
+
+        // Rotation about X axis.
+        axis = new Vector3D(1, 0, 0);
+        rotation = new Quaternion(1,1,0,0).multiply(1 / Math.sqrt(2));
+        assertEqualsQuaternion(new Quaternion(90, axis), rotation, tol);
+        assertEqualsQuaternion(Quaternion.basicRotationX(90), rotation, tol);
     }
 
     /**
@@ -251,5 +261,36 @@ public class TestQuaternion extends TestCase {
         assertEquals(new Quaternion(1, 1, 1, 1).normalize(),
                 new Quaternion(1, 1, 1, 1).multiply(1.0 / 2));
         assertEquals(new Quaternion(-1, 0, 0, 0).normalize(), new Quaternion(-1, 0, 0, 0));
+    }
+
+    /**
+     * Tester for the rotation method.
+     */
+    public void testRotation() {
+
+        double tol = 10e-6; // Tolerance.
+        Vector3D expected, vector;
+
+        expected = new Vector3D(1,2,3);
+        vector = new Vector3D(1,2,3);
+        assertEqualsVector3D(expected, Quaternion.basicRotationX(0).rotate(vector), tol);
+        assertEqualsVector3D(expected, Quaternion.basicRotationY(0).rotate(vector), tol);
+        assertEqualsVector3D(expected, Quaternion.basicRotationZ(0).rotate(vector), tol);
+        assertEqualsVector3D(expected, Quaternion.basicRotationX(360).rotate(vector), tol);
+        assertEqualsVector3D(expected, Quaternion.basicRotationX(360).rotate(vector), tol);
+        assertEqualsVector3D(expected, Quaternion.basicRotationX(360).rotate(vector), tol);
+
+        vector = new Vector3D(1,0,0);
+        expected = new Vector3D(0,1,0);
+        assertEqualsVector3D(expected, Quaternion.basicRotationZ(90).rotate(vector), tol);
+
+        expected = new Vector3D(1,1,0);
+        expected = expected.normalize();
+        assertEqualsVector3D(expected, Quaternion.basicRotationZ(45).rotate(vector), tol);
+        
+        expected = new Vector3D(1,-1,0);
+        expected = expected.normalize();
+        assertEqualsVector3D(expected, Quaternion.basicRotationZ(-45).rotate(vector), tol);
+
     }
 } ///:~

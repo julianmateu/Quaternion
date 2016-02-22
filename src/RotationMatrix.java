@@ -96,6 +96,31 @@ public class RotationMatrix {
         return new RotationMatrix(angle, new Vector3D(0, 0, 1));
     }
 
+
+    /**
+     * Method to rotate a vector.
+     *
+     * @param vector Vector3D to rotate.
+     * @return Result of the rotation.
+     */
+    public Vector3D rotate(Vector3D vector) {
+        double[] result = new double[]{0,0,0};
+
+        result[0] = this.getElement(0,0) * vector.x() +
+                    this.getElement(0,1) * vector.y() +
+                    this.getElement(0,2) * vector.z();
+
+        result[1] = this.getElement(1,0) * vector.x() +
+                    this.getElement(1,1) * vector.y() +
+                    this.getElement(1,2) * vector.z();
+
+        result[2] = this.getElement(2,0) * vector.x() +
+                    this.getElement(2,1) * vector.y() +
+                    this.getElement(2,2) * vector.z();
+
+        return new Vector3D(result);
+    }
+
     /**
      * Method to assert if to Rotation Matrices are equal.
      *

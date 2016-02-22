@@ -30,6 +30,22 @@ public class Vector3D {
     }
 
     /**
+     * Constructor from array.
+     *
+     * @param array Array from which the vector will be constructed.
+     */
+    public Vector3D(double[] array) {
+        if (array == null) {
+            throw new NullPointerException();
+            }
+
+        this.x = array[0];
+        this.y = array[1];
+        this.z = array[2];
+    }
+
+
+    /**
      * Method to add two Vector3Ds.
      *
      * @return It returns a new Vector3D with the result of the sum.
