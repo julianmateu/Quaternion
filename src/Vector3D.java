@@ -12,6 +12,7 @@ import java.lang.*;
 public class Vector3D {
 
     private static final double MIN_TOLERANCE = 1e-10;
+    private static final int SIZE = 3;
 
     //************ fields ************//
     private double x, y, z;
@@ -37,7 +38,7 @@ public class Vector3D {
     public Vector3D(double[] array) {
         if (array == null) {
             throw new NullPointerException();
-            }
+        }
 
         this.x = array[0];
         this.y = array[1];
@@ -149,41 +150,84 @@ public class Vector3D {
      * Getter for the X coordinate.
      */
     public double x() {
-        return this.x;
+        return this.getElement(0);
     }
 
     /**
      * Getter for the Y coordinate.
      */
     public double y() {
-        return this.y;
+        return this.getElement(1);
     }
 
     /**
      * Getter for the z coordinate.
      */
     public double z() {
-        return this.z;
+        return this.getElement(2);
     }
+
+    /**
+     * Method to get the element i of the vector.
+     *
+     * @return Returns the element on the ith row of the column vector.
+     */
+    public double getElement(int i) {
+        switch (i) {
+            case 0:
+                return this.x;
+            case 1:
+                return this.y;
+            case 2:
+                return this.z;
+            default:
+                throw new IllegalArgumentException("Attempting to access an inexistent element");
+        }
+    }
+
 
     /**
      * Setter for the X coordinate.
      */
     private void setX(double x) {
-        this.x = x;
+        this.setElement(0, x);
     }
 
     /**
      * Setter for the Y coordinate.
      */
     private void setY(double y) {
-        this.y = y;
+        this.setElement(1, y);
     }
 
     /**
      * Setter for the Z coordinate.
      */
     private void setZ(double z) {
-        this.z = z;
+        this.setElement(2, z);
     }
+
+    /**
+     * Method to set the element i of the vector.
+     *
+     * @param i     index of the element to set.
+     * @param value value to set.
+     */
+    private void setElement(int i, double value) {
+        switch (i) {
+            case 0:
+                this.x = value;
+                break;
+            case 1:
+                this.y = value;
+                break;
+            case 2:
+                this.z = value;
+                break;
+            default:
+                throw new IllegalArgumentException("Attempting to access an inexistent element");
+        }
+    }
+
+
 } 

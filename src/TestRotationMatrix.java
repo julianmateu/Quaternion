@@ -13,6 +13,8 @@ import java.lang.*;
  */
 public class TestRotationMatrix extends ProjectTest {
 
+    private static final int SIZE = 3;
+
     /**
      * Constructor
      */
@@ -30,6 +32,50 @@ public class TestRotationMatrix extends ProjectTest {
         assertEquals(a, new RotationMatrix(90, axis));
         assertEquals(a, a);
         assertFalse(a.equals(new RotationMatrix(45, axis)));
+
+    }
+
+    /**
+     * Tester for the getElement method.
+     */
+    public void testGetElement() {
+
+        RotationMatrix m = new RotationMatrix(new double[][]{{0, 1, 2}, {1, 2, 3}, {2, 3, 4}});
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                assertEquals((double) i + j, m.getElement(i, j));
+            }
+        }
+
+        try {
+            m.getElement(0, 3);
+            fail("Should have thrown an IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        }
+
+        try {
+            m.getElement(43, 2);
+            fail("Should have thrown an IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        }
+
+        try {
+            m.getElement(-10, 0);
+            fail("Should have thrown an IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        }
+
+        try {
+            m.getElement(-1, 2134);
+            fail("Should have thrown an IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        }
+
 
     }
 
@@ -76,8 +122,8 @@ public class TestRotationMatrix extends ProjectTest {
         double tol = 10e-6; // Tolerance.
         Vector3D expected, vector;
 
-        expected = new Vector3D(1,2,3);
-        vector = new Vector3D(1,2,3);
+        expected = new Vector3D(1, 2, 3);
+        vector = new Vector3D(1, 2, 3);
         assertEqualsVector3D(expected, RotationMatrix.basicRotationX(0).rotate(vector), tol);
         assertEqualsVector3D(expected, RotationMatrix.basicRotationY(0).rotate(vector), tol);
         assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(0).rotate(vector), tol);
@@ -85,15 +131,15 @@ public class TestRotationMatrix extends ProjectTest {
         assertEqualsVector3D(expected, RotationMatrix.basicRotationX(360).rotate(vector), tol);
         assertEqualsVector3D(expected, RotationMatrix.basicRotationX(360).rotate(vector), tol);
 
-        vector = new Vector3D(1,0,0);
-        expected = new Vector3D(0,1,0);
+        vector = new Vector3D(1, 0, 0);
+        expected = new Vector3D(0, 1, 0);
         assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(90).rotate(vector), tol);
 
-        expected = new Vector3D(1,1,0);
+        expected = new Vector3D(1, 1, 0);
         expected = expected.normalize();
         assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(45).rotate(vector), tol);
-        
-        expected = new Vector3D(1,-1,0);
+
+        expected = new Vector3D(1, -1, 0);
         expected = expected.normalize();
         assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(-45).rotate(vector), tol);
 

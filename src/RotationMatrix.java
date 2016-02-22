@@ -104,19 +104,13 @@ public class RotationMatrix {
      * @return Result of the rotation.
      */
     public Vector3D rotate(Vector3D vector) {
-        double[] result = new double[]{0,0,0};
+        double[] result = new double[]{0, 0, 0};
 
-        result[0] = this.getElement(0,0) * vector.x() +
-                    this.getElement(0,1) * vector.y() +
-                    this.getElement(0,2) * vector.z();
-
-        result[1] = this.getElement(1,0) * vector.x() +
-                    this.getElement(1,1) * vector.y() +
-                    this.getElement(1,2) * vector.z();
-
-        result[2] = this.getElement(2,0) * vector.x() +
-                    this.getElement(2,1) * vector.y() +
-                    this.getElement(2,2) * vector.z();
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                result[i] += this.getElement(i, j) * vector.getElement(j);
+            }
+        }
 
         return new Vector3D(result);
     }
@@ -181,7 +175,7 @@ public class RotationMatrix {
      * @return Returns the element in the ith row and jth column of the matrix.
      */
     public double getElement(int i, int j) {
-        if (i < 0 || i > SIZE || j < 0 || j > SIZE) {
+        if (i < 0 || i >= SIZE || j < 0 || j >= SIZE) {
             throw new IllegalArgumentException("Attempting to access an inexistent element");
         }
 

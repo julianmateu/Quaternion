@@ -34,16 +34,41 @@ public class TestVector3D extends ProjectTest {
      * Tester for the constructor.
      */
     public void testConstructor() {
-        double[] array = new double[]{1,2,3};
+        double[] array = new double[]{1, 2, 3};
 
         Vector3D v = new Vector3D(array);
 
-        assertEquals(v, new Vector3D(1,2,3));
+        assertEquals(v, new Vector3D(1, 2, 3));
 
         try {
             new Vector3D(null);
             fail("Should have thrown a NullPointerException");
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
+            assertTrue(true);
+        }
+    }
+
+    /**
+     * Tester for the getters.
+     */
+    public void testGetElement() {
+        Vector3D v = new Vector3D(1, 2, 3);
+
+        assertEquals(1.0, v.getElement(0));
+        assertEquals(2.0, v.getElement(1));
+        assertEquals(3.0, v.getElement(2));
+
+        try {
+            v.getElement(3);
+            fail("Should have thrown an IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        }
+
+        try {
+            v.getElement(-1);
+            fail("Should have thrown an IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
             assertTrue(true);
         }
     }
