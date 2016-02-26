@@ -116,9 +116,9 @@ public class RotationMatrix {
     }
 
     /**
-     * Method to assert if to Rotation Matrices are equal.
+     * Method to assert if two Rotation Matrices are equal.
      *
-     * @return Returns True if they are equal, and False otherwise.
+     * @return Returns true if they are equal, and false otherwise.
      */
     public boolean equals(RotationMatrix compared) {
         for (int i = 0; i < SIZE; i++) {
@@ -176,7 +176,8 @@ public class RotationMatrix {
      */
     public double getElement(int i, int j) {
         if (i < 0 || i >= SIZE || j < 0 || j >= SIZE) {
-            throw new IllegalArgumentException("Attempting to access an inexistent element");
+            throw new IllegalArgumentException("Element out of bounds (" +i + "," 
+                    + "). Matrix size is " + SIZE + "x" + SIZE);
         }
 
         return matrix[i][j];

@@ -190,12 +190,12 @@ public class TestVector3D extends ProjectTest {
      */
     public void testNorm() {
 
-        double tol = 1e-6; // Tolerance.
-        assertEquals(new Vector3D(1, 1, 1).norm(), Math.sqrt(3), tol);
-        assertEquals(new Vector3D(1, 0, 0).norm(), 1, tol);
-        assertEquals(new Vector3D(-1, 1, -1).norm(), Math.sqrt(3), tol);
-        assertEquals(new Vector3D(1, 2, -3).norm(), Math.sqrt(14), tol);
-        assertEquals(new Vector3D(3, 4, 12).norm(), 13, tol);
+        double tolerance = 1e-6;
+        assertEquals(new Vector3D(1, 1, 1).norm(), Math.sqrt(3), tolerance);
+        assertEquals(new Vector3D(1, 0, 0).norm(), 1, tolerance);
+        assertEquals(new Vector3D(-1, 1, -1).norm(), Math.sqrt(3), tolerance);
+        assertEquals(new Vector3D(1, 2, -3).norm(), Math.sqrt(14), tolerance);
+        assertEquals(new Vector3D(3, 4, 12).norm(), 13, tolerance);
 
         try {
             Vector3D vector = new Vector3D(0, 0, 0);

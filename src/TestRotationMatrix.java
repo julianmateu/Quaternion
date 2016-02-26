@@ -83,28 +83,31 @@ public class TestRotationMatrix extends ProjectTest {
      * Tester for the constructors.
      */
     public void testConstructors() {
-        double tol = 1e-10; // Tolerance.
+        double tolerance = 1e-10;
 
         // Rotation about Z axis.
         Vector3D axis = new Vector3D(0, 0, 1);
         double[][] matrix = new double[][]{{0, -1, 0}, {1, 0, 0}, {0, 0, 1}};
-        assertEqualsRotationMatrix(new RotationMatrix(90, axis), new RotationMatrix(matrix), tol);
+        assertEqualsRotationMatrix(new RotationMatrix(90, axis),
+                new RotationMatrix(matrix), tolerance);
         assertEqualsRotationMatrix(RotationMatrix.basicRotationZ(90),
-                new RotationMatrix(matrix), tol);
+                new RotationMatrix(matrix), tolerance);
 
         // Rotation about Y axis.
         axis = new Vector3D(0, 1, 0);
         matrix = new double[][]{{0, 0, 1}, {0, 1, 0}, {-1, 0, 0}};
-        assertEqualsRotationMatrix(new RotationMatrix(90, axis), new RotationMatrix(matrix), tol);
+        assertEqualsRotationMatrix(new RotationMatrix(90, axis),
+                new RotationMatrix(matrix), tolerance);
         assertEqualsRotationMatrix(RotationMatrix.basicRotationY(90),
-                new RotationMatrix(matrix), tol);
+                new RotationMatrix(matrix), tolerance);
 
         // Rotation about X axis.
         axis = new Vector3D(1, 0, 0);
         matrix = new double[][]{{1, 0, 0}, {0, 0, -1}, {0, 1, 0}};
-        assertEqualsRotationMatrix(new RotationMatrix(90, axis), new RotationMatrix(matrix), tol);
+        assertEqualsRotationMatrix(new RotationMatrix(90, axis),
+                new RotationMatrix(matrix), tolerance);
         assertEqualsRotationMatrix(RotationMatrix.basicRotationX(90),
-                new RotationMatrix(matrix), tol);
+                new RotationMatrix(matrix), tolerance);
 
         try {
             new RotationMatrix(90, null);
@@ -119,29 +122,33 @@ public class TestRotationMatrix extends ProjectTest {
      */
     public void testRotation() {
 
-        double tol = 10e-6; // Tolerance.
+        double tolerance = 10e-6;
         Vector3D expected, vector;
 
         expected = new Vector3D(1, 2, 3);
         vector = new Vector3D(1, 2, 3);
-        assertEqualsVector3D(expected, RotationMatrix.basicRotationX(0).rotate(vector), tol);
-        assertEqualsVector3D(expected, RotationMatrix.basicRotationY(0).rotate(vector), tol);
-        assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(0).rotate(vector), tol);
-        assertEqualsVector3D(expected, RotationMatrix.basicRotationX(360).rotate(vector), tol);
-        assertEqualsVector3D(expected, RotationMatrix.basicRotationX(360).rotate(vector), tol);
-        assertEqualsVector3D(expected, RotationMatrix.basicRotationX(360).rotate(vector), tol);
+        assertEqualsVector3D(expected, RotationMatrix.basicRotationX(0).rotate(vector), tolerance);
+        assertEqualsVector3D(expected, RotationMatrix.basicRotationY(0).rotate(vector), tolerance);
+        assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(0).rotate(vector), tolerance);
+        assertEqualsVector3D(expected, RotationMatrix.basicRotationX(360).rotate(vector),
+                tolerance);
+        assertEqualsVector3D(expected, RotationMatrix.basicRotationX(360).rotate(vector),
+                tolerance);
+        assertEqualsVector3D(expected, RotationMatrix.basicRotationX(360).rotate(vector),
+                tolerance);
 
         vector = new Vector3D(1, 0, 0);
         expected = new Vector3D(0, 1, 0);
-        assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(90).rotate(vector), tol);
+        assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(90).rotate(vector), tolerance);
 
         expected = new Vector3D(1, 1, 0);
         expected = expected.normalize();
-        assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(45).rotate(vector), tol);
+        assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(45).rotate(vector), tolerance);
 
         expected = new Vector3D(1, -1, 0);
         expected = expected.normalize();
-        assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(-45).rotate(vector), tol);
+        assertEqualsVector3D(expected, RotationMatrix.basicRotationZ(-45).rotate(vector),
+                tolerance);
 
     }
 
