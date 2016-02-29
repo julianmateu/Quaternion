@@ -120,7 +120,7 @@ public class TestRotationMatrix extends ProjectTest {
     /**
      * Tester for the rotation method.
      */
-    public void testRotation() {
+    public void testRotation() throws ZeroNormException {
 
         double tolerance = 10e-6;
         Vector3D expected, vector;

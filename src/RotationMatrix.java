@@ -34,7 +34,12 @@ public class RotationMatrix {
         double s = Math.sin(Math.toRadians(angle));
 
         if (axis.norm() != 1) {
-            axis = axis.normalize();
+            try {
+                axis = axis.normalize();
+            } catch (ZeroNormException e) {
+                throw new IllegalArgumentException("Attempting to create a RotationMatrix with"
+                        + " a zero norm axis");
+            }
         }
 
         matrix[0][0] = c + axis.x() * axis.x() * (1 - c);

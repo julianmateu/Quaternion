@@ -246,7 +246,7 @@ public class TestQuaternion extends ProjectTest {
             Quaternion vector = new Quaternion(0, 0, 0, 0);
             vector.normalize();
             fail("Should have thrown an IllegalArgumentException for zero norm");
-        } catch (IllegalArgumentException e) {
+        } catch (ZeroNormException e) {
             assertTrue(true);
         }
     }
@@ -254,7 +254,7 @@ public class TestQuaternion extends ProjectTest {
     /**
      * Tester for the normalize method.
      */
-    public void testNormalize() {
+    public void testNormalize() throws ZeroNormException {
         assertEquals(new Quaternion(1, 0, 0, 0).normalize(), new Quaternion(1, 0, 0, 0));
         assertEquals(new Quaternion(1, -1, 0, 0).normalize(),
                 new Quaternion(1.0 / Math.sqrt(2), -1.0 / Math.sqrt(2), 0, 0));
@@ -266,7 +266,7 @@ public class TestQuaternion extends ProjectTest {
     /**
      * Tester for the rotation method.
      */
-    public void testRotation() {
+    public void testRotation() throws ZeroNormException {
 
         double tolerance = 10e-6;
         Vector3D expected, vector;

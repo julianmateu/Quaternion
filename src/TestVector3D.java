@@ -200,8 +200,8 @@ public class TestVector3D extends ProjectTest {
         try {
             Vector3D vector = new Vector3D(0, 0, 0);
             vector.normalize();
-            fail("Should have thrown an IllegalArgumentException for zero norm");
-        } catch (IllegalArgumentException e) {
+            fail("Should have thrown an exception for zero norm");
+        } catch (ZeroNormException e) {
             assertTrue(true);
         }
     }
@@ -209,7 +209,7 @@ public class TestVector3D extends ProjectTest {
     /**
      * Tester for the normalize method.
      */
-    public void testNormalize() {
+    public void testNormalize() throws ZeroNormException {
         assertEquals(new Vector3D(1, 0, 0).normalize(), new Vector3D(1, 0, 0));
         assertEquals(new Vector3D(1, -1, 0).normalize(),
                 new Vector3D(1.0 / Math.sqrt(2), -1.0 / Math.sqrt(2), 0));

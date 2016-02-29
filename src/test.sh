@@ -1,3 +1,4 @@
+javac ZeroNormException.java
 javac Quaternion.java TestQuaternion.java
 java junit.textui.TestRunner TestQuaternion
 javac Vector3D.java TestVector3D.java

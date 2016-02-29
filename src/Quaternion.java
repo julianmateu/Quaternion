@@ -32,13 +32,20 @@ public class Quaternion {
      *
      * @param angle Angle of counterclockwise rotation in degrees.
      * @param axis  Vector3D that represents the axis of rotation.
+     * @throws ZeroNormException if the norm of the axis is zero.
      */
     public Quaternion(double angle, Vector3D axis) {
         double c = Math.cos(Math.toRadians(angle) / 2.0);
         double s = Math.sin(Math.toRadians(angle) / 2.0);
 
         if (axis.norm() != 1) {
-            axis = axis.normalize();
+            try {
+                axis = axis.normalize();
+            } catch (ZeroNormException e) {
+                throw new IllegalArgumentException("Attempting to create a Quaternion "
+                        + "with a zero norm axis.");
+            }
+            
         }
 
         axis = axis.multiply(s);
@@ -181,13 +188,14 @@ public class Quaternion {
      * Method to normalize a Quaternion.
      *
      * @return Returns a new Quaternion with unit norm, un the same direction.
+     * @throws ZeroNormException if the norm of the quaternion is zero.
      */
-    public Quaternion normalize() {
+    public Quaternion normalize() throws ZeroNormException {
 
         double norm = this.norm();
 
         if (norm < MIN_TOLERANCE) {
-            throw new IllegalArgumentException("Trying to normalize a zero norm quaternion");
+            throw new ZeroNormException("Trying to normalize a zero norm quaternion");
         }
 
         return new Quaternion(
@@ -200,13 +208,17 @@ public class Quaternion {
     /**
      * Method to rotate a Vector3D using quaternions.
      *
+     * It assumes that the quaternion represents a valid rotation, i.e., it is of the form
+     * q = cos(a) + sin(a) * (x*i + y*j + z*k), where a is the angle of counterclockwise rotation
+     * and x,y,z are the components of the unit norm axis. It just performs the opperation 
+     * qpq*.
+     *
      * @param vector Vector3D to rotate.
      * @return Result of the rotation.
      */
     public Vector3D rotate(Vector3D vector) {
         Quaternion p = new Quaternion(0, vector.x(), vector.y(), vector.z());
-        Quaternion q = this.normalize();
-        Quaternion result = q.multiply(p.multiply(q.conjugate()));
+        Quaternion result = this.multiply(p.multiply(this.conjugate()));
 
         return new Vector3D(result.getI(), result.getJ(), result.getK());
     }

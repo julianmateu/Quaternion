@@ -97,13 +97,14 @@ public class Vector3D {
      * Method to normalize a Vector3D.
      *
      * @return Returns a new Vector3D with unit norm, un the same direction.
+     * @throws ZeroNormException if the norm of the vector is zero.
      */
-    public Vector3D normalize() {
+    public Vector3D normalize() throws ZeroNormException {
 
         double norm = this.norm();
 
         if (norm < MIN_TOLERANCE) {
-            throw new IllegalArgumentException("Trying to normalize a zero norm vector");
+            throw new ZeroNormException("Trying to normalize a zero norm vector");
         }
 
         return new Vector3D(
@@ -181,7 +182,8 @@ public class Vector3D {
             case 2:
                 return this.z;
             default:
-                throw new IllegalArgumentException("Attempting to access an inexistent element");
+                throw new IllegalArgumentException("Attempting to access an inexistent element: "
+                        + i);
         }
     }
 
@@ -225,7 +227,8 @@ public class Vector3D {
                 this.z = value;
                 break;
             default:
-                throw new IllegalArgumentException("Attempting to access an inexistent element");
+                throw new IllegalArgumentException("Attempting to access an inexistent element: "
+                        + i);
         }
     }
 
