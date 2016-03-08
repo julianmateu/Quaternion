@@ -227,7 +227,7 @@ public class Quaternion {
     /**
      * Method to assert if to Quaternions are equal.
      *
-     * @return Returns True if they are equal, and False otherwise.
+     * @return Returns true if they are equal, and false otherwise.
      */
     public boolean equals(Quaternion compared) {
 
