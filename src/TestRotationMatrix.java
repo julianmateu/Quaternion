@@ -22,9 +22,6 @@ public class TestRotationMatrix extends ProjectTest {
         super(name);
     }
 
-    /**
-     * Tester for the equals() method.
-     */
     public void testEquals() {
         Vector3D axis = new Vector3D(1, 0, 0);
         RotationMatrix a = new RotationMatrix(90, axis);
@@ -35,9 +32,6 @@ public class TestRotationMatrix extends ProjectTest {
 
     }
 
-    /**
-     * Tester for the getElement method.
-     */
     public void testGetElement() {
 
         RotationMatrix m = new RotationMatrix(new double[][]{{0, 1, 2}, {1, 2, 3}, {2, 3, 4}});
