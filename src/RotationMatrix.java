@@ -139,7 +139,7 @@ public class RotationMatrix {
     /**
      * Method to assert if to Rotation Matrices are equal.
      *
-     * @return Returns True if they are equal, and False otherwise.
+     * @return Returns true if they are equal, and false otherwise.
      */
     @Override
     public boolean equals(Object compared) {
