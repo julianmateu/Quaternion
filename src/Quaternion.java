@@ -9,6 +9,9 @@
  * @version 1.0
  */
 public class Quaternion {
+
+    private static final double MIN_TOLERANCE = 1e-10;
+
     //************ fields ************//
     private double r, i, j, k;
 
@@ -22,6 +25,62 @@ public class Quaternion {
         this.i = i;
         this.j = j;
         this.k = k;
+    }
+
+    /**
+     * Constructor from angle and axis.
+     *
+     * @param angle Angle of counterclockwise rotation in degrees.
+     * @param axis  Vector3D that represents the axis of rotation.
+     * @throws ZeroNormException if the norm of the axis is zero.
+     */
+    public Quaternion(double angle, Vector3D axis) {
+        double c = Math.cos(Math.toRadians(angle) / 2.0);
+        double s = Math.sin(Math.toRadians(angle) / 2.0);
+
+        if (axis.norm() != 1) {
+            try {
+                axis = axis.normalize();
+            } catch (ZeroNormException e) {
+                throw new IllegalArgumentException("Attempting to create a Quaternion "
+                        + "with a zero norm axis.");
+            }
+            
+        }
+
+        axis = axis.multiply(s);
+
+        this.r = c;
+        this.i = axis.x();
+        this.j = axis.y();
+        this.k = axis.z();
+    }
+
+    /**
+     * Constructor for basic rotation around X axis.
+     *
+     * @param angle Angle in degrees of counterclockwise rotation around X axis.
+     */
+    public static Quaternion basicRotationX(double angle) {
+        return new Quaternion(angle, new Vector3D(1, 0, 0));
+    }
+
+    /**
+     * Constructor for basic rotation around Y axis.
+     *
+     * @param angle Angle in degrees of counterclockwise rotation around Y axis.
+     */
+    public static Quaternion basicRotationY(double angle) {
+        return new Quaternion(angle, new Vector3D(0, 1, 0));
+    }
+
+    /**
+     * Constructor for basic rotation around Z axis.
+     *
+     * @param angle Angle in degrees of counterclockwise rotation around Z axis.
+     */
+    public static Quaternion basicRotationZ(double angle) {
+        return new Quaternion(angle, new Vector3D(0, 0, 1));
     }
 
     //************ Methods ************//
@@ -83,9 +142,92 @@ public class Quaternion {
     }
 
     /**
+     * Method to conjugate a Quaternion.
+     *
+     * @return Returns a new Quaternion with the conjugate.
+     */
+    public Quaternion conjugate() {
+        return new Quaternion(
+                this.getR(),
+                -this.getI(),
+                -this.getJ(),
+                -this.getK());
+    }
+
+    /**
+     * Method to conjugate a Quaternion using multiplications only.
+     *
+     * @return Returns a new Quaternion with the conjugate, but using the formula
+     * q* = -(1/2)*(q + iqi + jqj + kqk).
+     */
+    public Quaternion conjugateMultiplying() {
+        Quaternion i = new Quaternion(0, 1, 0, 0);
+        Quaternion j = new Quaternion(0, 0, 1, 0);
+        Quaternion k = new Quaternion(0, 0, 0, 1);
+
+        Quaternion result = this;
+        result = result.add(i.multiply(this.multiply(i)));
+        result = result.add(j.multiply(this.multiply(j)));
+        result = result.add(k.multiply(this.multiply(k)));
+        return result.multiply(-0.5);
+    }
+
+    /**
+     * Method to calculate the norm of a Quaternion.
+     *
+     * @return Returns the norm of the quaternion.
+     */
+    public double norm() {
+        return Math.sqrt(this.getR() * this.getR() +
+                this.getI() * this.getI() +
+                this.getJ() * this.getJ() +
+                this.getK() * this.getK());
+    }
+
+    /**
+     * Method to normalize a Quaternion.
+     *
+     * @return Returns a new Quaternion with unit norm, un the same direction.
+     * @throws ZeroNormException if the norm of the quaternion is zero.
+     */
+    public Quaternion normalize() throws ZeroNormException {
+
+        double norm = this.norm();
+
+        if (norm < MIN_TOLERANCE) {
+            throw new ZeroNormException("Trying to normalize a zero norm quaternion");
+        }
+
+        return new Quaternion(
+                this.getR(),
+                this.getI(),
+                this.getJ(),
+                this.getK()).multiply(1.0 / norm);
+    }
+
+    /**
+     * Method to rotate a Vector3D using quaternions.
+     *
+     * It assumes that the quaternion represents a valid rotation, i.e., it is of the form
+     * q = cos(a) + sin(a) * (x*i + y*j + z*k), where a is the angle of counterclockwise rotation
+     * and x,y,z are the components of the unit norm axis. It just performs the opperation 
+     * qpq*.
+     *
+     * @param vector Vector3D to rotate.
+     * @return Result of the rotation.
+     */
+    public Vector3D rotate(Vector3D vector) {
+        Quaternion p = new Quaternion(0, vector.x(), vector.y(), vector.z());
+        Quaternion result = this.multiply(p.multiply(this.conjugate()));
+
+        return new Vector3D(result.getI(), result.getJ(), result.getK());
+    }
+
+
+    /**
      * Method to assert if to Quaternions are equal.
      *
-     * @return Returns True if they are equal, and False otherwise.
+     * @return Returns true if they are equal, and false otherwise.
      */
     public boolean equals(Quaternion compared) {
 
